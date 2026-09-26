@@ -25,28 +25,24 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '10.24.1'
+          node-version: '6.11.0'
 
       - name: Pre-install global tools
-        run: |
-          npm install -g rimraf@2 webpack@2.5.0
-
-      - name: Make Maven Wrapper Executable
-        run: chmod +x mvnw
+        run: npm install -g rimraf@2 webpack@2.5.0
 
       - name: Build with Maven (Dev)
         env:
           NODE_TLS_REJECT_UNAUTHORIZED: "0"
           PHANTOMJS_CDNURL: "https://npmmirror.com/mirrors/phantomjs/"
           OPENSSL_CONF: "/dev/null"
-        run: ./mvnw -B clean verify
+        run: mvn -B clean verify
 
       - name: Package Production WAR
         env:
           NODE_TLS_REJECT_UNAUTHORIZED: "0"
           PHANTOMJS_CDNURL: "https://npmmirror.com/mirrors/phantomjs/"
           OPENSSL_CONF: "/dev/null"
-        run: ./mvnw -B package -Pprod -DskipTests
+        run: mvn -B package -Pprod -DskipTests
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
