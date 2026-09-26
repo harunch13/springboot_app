@@ -1,4 +1,3 @@
-#
 name: JHipster CI Build
 
 on:
@@ -39,7 +38,7 @@ jobs:
 
       # Step 5: Grant execute permission to the Maven wrapper
       - name: Make Maven Wrapper Executable
-        run: chmod +x mvnw
+        run: chmod +x mvn
 
       # Step 6: Run full verification build
       - name: Build with Maven (Dev)
@@ -47,7 +46,7 @@ jobs:
           NODE_TLS_REJECT_UNAUTHORIZED: "0"
           PHANTOMJS_CDNURL: "https://npmmirror.com/mirrors/phantomjs/"
           OPENSSL_CONF: "/dev/null"
-        run: ./mvnw -B clean verify
+        run: ./mvn -B clean verify
 
       # Step 7: Package for Production
       - name: Package Production WAR
@@ -55,7 +54,7 @@ jobs:
           NODE_TLS_REJECT_UNAUTHORIZED: "0"
           PHANTOMJS_CDNURL: "https://npmmirror.com/mirrors/phantomjs/"
           OPENSSL_CONF: "/dev/null"
-        run: ./mvnw -B package -Pprod -DskipTests
+        run: ./mvn -B package -Pprod -DskipTests
 
       # Step 8: Upload the built WAR archive
       - name: Upload Build Artifact
